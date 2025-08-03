@@ -78,8 +78,13 @@ func (m *MecabAnalyzer) Parse(text string) ([]Token, error) {
 	for _, r := range rawResult {
 		length := len(r)
 
+		basicForm := NUL
 		reading := NUL
 		pronunciation := NUL
+
+		if length > 7 {
+			basicForm = r[7]
+		}
 
 		if length > 8 {
 			reading = r[8]
@@ -97,7 +102,7 @@ func (m *MecabAnalyzer) Parse(text string) ([]Token, error) {
 			PosDetail3:     r[4],
 			ConjugatedType: r[5],
 			ConjugatedForm: r[6],
-			BasicForm:      r[7],
+			BasicForm:      basicForm,
 			Reading:        reading,
 			Pronunciation:  pronunciation,
 		})
