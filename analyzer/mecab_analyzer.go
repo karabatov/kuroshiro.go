@@ -74,40 +74,50 @@ func (m *MecabAnalyzer) Parse(text string) ([]Token, error) {
 		return nil, err
 	}
 
+	/*
+		# F[0]: pos1
+		# F[1]: pos2
+		# F[2]: pos3
+		# F[3]: pos4
+		# F[4]: cType
+		# F[5]: cForm
+		# F[6]: lForm
+		# F[7]: lemma
+		# F[8]: orth
+		# F[9]: orthBase
+		# F[10]: pron
+		# F[11]: pronBase
+		# F[12]: goshu
+		# F[13]: aType
+		# F[14]: aConType
+		# F[15]: aModType
+	*/
+
 	var result []Token
 	for _, r := range rawResult {
 		length := len(r)
 
 		basicForm := NUL
-		reading := NUL
 		pronunciation := NUL
 
-		if length > 7 {
-			basicForm = r[7]
-			reading = r[7]
-			pronunciation = r[7]
+		if length > 8 {
+			basicForm = r[8]
 		}
 
-		/*
-			if length > 8 {
-				reading = r[8]
-			}
-
-			if length > 9 {
-				pronunciation = r[9]
-			}
-		*/
+		if length > 10 {
+			pronunciation = r[10]
+		}
 
 		result = append(result, Token{
 			SurfaceForm:    r[0],
 			Pos:            r[1],
 			PosDetail1:     r[2],
 			PosDetail2:     r[3],
-			PosDetail3:     r[4],
-			ConjugatedType: r[5],
-			ConjugatedForm: r[6],
+			PosDetail3:     NUL,
+			ConjugatedType: r[4],
+			ConjugatedForm: r[5],
 			BasicForm:      basicForm,
-			Reading:        reading,
+			Reading:        pronunciation,
 			Pronunciation:  pronunciation,
 		})
 	}
