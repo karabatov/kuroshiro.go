@@ -84,15 +84,19 @@ func (m *MecabAnalyzer) Parse(text string) ([]Token, error) {
 
 		if length > 7 {
 			basicForm = r[7]
+			reading = r[7]
+			pronunciation = r[7]
 		}
 
-		if length > 8 {
-			reading = r[8]
-		}
+		/*
+			if length > 8 {
+				reading = r[8]
+			}
 
-		if length > 9 {
-			pronunciation = r[9]
-		}
+			if length > 9 {
+				pronunciation = r[9]
+			}
+		*/
 
 		result = append(result, Token{
 			SurfaceForm:    r[0],
